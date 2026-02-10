@@ -93,10 +93,11 @@ if st.button("Oblicz wyniki"):
         is_equity = any(x in winner['ETF'] for x in equity_keywords)
 
         if is_equity and winner['Wzrost (%)'] > 0:
-            st.success(f"**SYGNAŁ:** Kupuj/Trzymaj **{winner['ETF']}** (Akcje)")
+            st.success(f"**SYGNAŁ:** Kupuj/Trzymaj **{winner['ETF']}**")
         else:
             bond_winner = df_results[df_results['Ticker'].isin(['IB01.L', 'CBU0.L'])].iloc[0]
             st.warning(f"**SYGNAŁ:** Ucieczka do bezpiecznej przystani -> **{bond_winner['ETF']}** (Obligacje)")
     else:
         st.error("Nie udało się pobrać danych.")
+
 
