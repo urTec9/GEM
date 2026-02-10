@@ -5,8 +5,8 @@ from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
 
 # Tytuł strony
-st.set_page_config(page_title="Strategia GEM", page_icon="📈")
-st.title("📈 Strategia GEM (12-1)")
+st.set_page_config(page_title="Kalkulator GEM", page_icon="📈")
+st.title("Kalkulator GEM")
 
 # 1. Konfiguracja Tickerów (Wszystkie z Londynu dla USD)
 etf_map = {
@@ -25,10 +25,10 @@ end_date = first_day_last_month - timedelta(days=1)
 start_date = end_date.replace(year=end_date.year - 1) + timedelta(days=1)
 
 st.write(f"📅 **Data analizy:** {today}")
-st.info(f"Badany przedział (Momentum 12-1): **{start_date}** do **{end_date}**")
+st.info(f"Badany przedział: **{start_date}** do **{end_date}**")
 
 # Przycisk uruchamiający
-if st.button("Oblicz wyniki 🔄"):
+if st.button("Oblicz wyniki"):
     results = []
     progress_bar = st.progress(0)
     status_text = st.empty()
@@ -82,7 +82,7 @@ if st.button("Oblicz wyniki 🔄"):
         # Wyłonienie zwycięzcy
         winner = df_results.iloc[0]
         st.divider()
-        st.subheader("🏆 Decyzja Strategiczna")
+        st.subheader("Decyzja Strategiczna")
         
         col1, col2 = st.columns(2)
         col1.metric("Lider", winner['ETF'])
@@ -93,9 +93,10 @@ if st.button("Oblicz wyniki 🔄"):
         is_equity = any(x in winner['ETF'] for x in equity_keywords)
 
         if is_equity and winner['Wzrost (%)'] > 0:
-            st.success(f"✅ **SYGNAŁ:** Kupuj/Trzymaj **{winner['ETF']}** (Akcje)")
+            st.success(f"**SYGNAŁ:** Kupuj/Trzymaj **{winner['ETF']}** (Akcje)")
         else:
             bond_winner = df_results[df_results['Ticker'].isin(['IB01.L', 'CBU0.L'])].iloc[0]
-            st.warning(f"🛡️ **SYGNAŁ:** Ucieczka do bezpiecznej przystani -> **{bond_winner['ETF']}** (Obligacje)")
+            st.warning(f"**SYGNAŁ:** Ucieczka do bezpiecznej przystani -> **{bond_winner['ETF']}** (Obligacje)")
     else:
         st.error("Nie udało się pobrać danych.")
+
